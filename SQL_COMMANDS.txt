@@ -1,0 +1,194 @@
+CREATE
+
+create table store_information(store_name varchar(20),sales int,txn_date date);
+
+INSERT MULTIPLE ROWS
+
+insert all 
+into store_information values('Los Angles',1500,'Jan-05-1999')
+into store_information values('San Deigo',250,'Jan-07-1999')
+into store_information values('Los Angles',300,'Jan-08-1999')
+into store_information values('Boston',700,'Jan-08-1999')
+select 1 from dual;
+
+SELECT ONE COLUMN
+
+select store_name from store_information;
+
+SELECT MORE THAN ONE COLUMN
+
+select store_name, sales from store_information;
+
+SELECT ALL COLUMNS
+
+select * from store_information;
+
+MATH OPERATION
+
+select 2+3 from dual;
+
+
+DISTINCT COMMNAND ON ONE COLUMN
+
+select distinct store_name from store_information;
+
+DISTINCT COMMAND ON MULTIPLE COLUMNS
+
+select distinct store_name,txn_date from store_information;
+
+WHERE CLAUSE WITH SIMPLE CONDITION
+Q. To select all stores with sales above $1,000 in Table Store_Information
+select store_name from store_information where sales>1000;
+
+WHERE CLAUSE WITH OR OPERATOR
+Q. To view all data with sales greater than $1,000 or with transaction date of 'Jan-08-1999'
+select * from store_information where sales>1000 OR txn_date='Jan-08-1999';
+
+USING WHERE CLAUSE WITH UPDATE COMMAND
+Q. Update the sales column to 2000 where transaction date is 01/08/1999
+update store_information set sales='2000' where txn_date='Jan-08-1999'
+
+USING WHERE CLAUSE WITH DELETE COMMAND
+Q. Delete the record having sales='250'
+delete from store_information where sales='250';
+
+AND OR
+Q. Select all stores with sales greater than $1,000 or all stores with sales less than $500 but greater than $275.
+select store_name from store_information where sales>1500 or(sales<500 and sales<275);
+
+IN
+Q. To select store_name having the sales value=2000 Table Store_Information
+select store_name from store_information where sales in('2000');
+
+*SELECTING AND INSERTING DATA INTO TABLE GEOGRAPHY
+
+create table geography(region_name varchar(20),store_name varchar(20));
+insert all
+into geography values('East','Boston')
+into geography values('East','New York')
+into geography values('West','Los Angeles')
+into geography values('West','San deigo')
+select 1 from dual;
+
+IN WITH SUBQUERY
+
+Q. Select the transaction date from store_information whose region is East in geography table.
+select txn_date from store_information where store_name in(select store_name from geography where region_name = 'East');
+
+BETWEEN(Including Range)
+
+Q. To select view all sales information between January 6, 1999, and January 10, 1999
+select * from store_information where txn_date between 'Jan 01 1999' and'Jan 20 1999';
+
+BETWEEN(Excluding Range)
+
+Q. To select view all sales information not between January 6, 1999, and January 10, 1999
+select * from store_information where txn_date not between 'Jan 01 1999' and'Jan 20 1999';
+
+LIKE
+
+Q. We want to find all stores whose name contains 'os'
+select *
+FROM store_information
+where store_name like '%os%';
+
+ORDER BY
+
+Q. To list the contents of Table Store_Information by Sales in descending order.
+select * from store_information order by sales desc;
+
+ORDER BY BY SPECIFYING THE COLUMN POSITION
+select * from store_information order by 1 desc;
+
+ORDER BY A SINGLE COLUMN USING A COLUMN NOT IN THE SELECT STATEMENT
+select store_name from store_information order by sales desc;
+
+Creating and inserting data into Product_Sales table
+
+
+create table Product_sales(product_id int,price int,units int);
+
+insert all
+into Product_sales values(1,10,9)
+into Product_sales values(2,15,4)
+into Product_sales values(3,25,3)
+select 1 from dual;
+
+ORDER BY AN EXPRESSION
+
+Q. Order the results by Revenue (defined as Price * Units)
+SELECT Product_ID, Price*Units Revenue
+FROM Product_Sales
+ORDER BY Price*Units DESC;
+
+GROUP BY
+
+Q. to find total sales for each store
+
+SELECT Store_Name, SUM(Sales)
+FROM Store_Information
+GROUP BY Store_Name;
+
+
+GROUP BY MULTIPLE COLUMNS
+
+Q. to find total sales for each product at each store
+
+SELECT Store_Name, SUM(Sales)
+FROM Store_Information
+GROUP BY Store_Name;
+
+GROUP BY MULTIPLE COLUMNS AN DMULTIPLE FUNCTIONS
+
+Q.  to find total sales and the average sales for each product at each store
+
+SELECT Store_Name,SUM(Sales), AVG(Sales)
+FROM Store_Information
+GROUP BY Store_Name;
+
+GROUP BY MONTH DAY AND WEEK
+
+Q. to find total daily sales from Store_Information
+SELECT Txn_Date, SUM(Sales)
+FROM Store_Information
+GROUP BY Txn_Date
+ORDER BY Txn_Date;
+
+
+LIMIT
+
+Q. To retrieve the two highest sales amounts in Table Store_Information
+SELECT Store_Name, Sales, Txn_Date
+FROM Store_Information
+ORDER BY Sales DESC
+LIMIT 2;
+
+ALIAS
+
+SELECT A1.Store_Name Store, SUM(A1.Sales) "Total Sales"
+FROM Store_Information A1
+GROUP BY A1.Store_Name;
+
+AS
+
+SELECT A1.Store_Name Store, SUM(A1.Sales) AS "Total Sales"
+FROM Store_Information AS A1
+GROUP BY A1.Store_Name;
+
+UNIQUE
+
+SELECT UNIQUE Sales FROM Store_Information;
+
+JOIN
+
+SELECT A1.Region_Name REGION, SUM(A2.Sales) SALES
+FROM Geography A1
+JOIN Store_Information A2
+ON A1.Store_Name = A2.Store_Name
+GROUP BY A1.Region_Name;
+
+
+
+
+
+
